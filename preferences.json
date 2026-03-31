@@ -1,0 +1,11 @@
+{
+  "settings": {
+    "theme": "default"
+  },
+  "apis": {
+    "claude_api_key": "asdasdasd",
+    "anthropic_api_key": "",
+    "trello_api_key": "",
+    "trello_api_token": ""
+  }
+}
