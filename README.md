@@ -4,11 +4,11 @@
 Let's get you setup with ClearScope.
 
 <h2>Collecting API Keys</h2>
-<h></h>
+
 <h3>Claude</h3>
 
 <h3>Trello</h3>
-<h></h>
+<hr></hr>
 Start by creating a board if you have not already. We will use this board to store all of the output from the application.
 
 Once you have a board created, navigate to this link, <a url="https://trello.com/power-ups/admin"> https://trello.com/power-ups/admin </a> and sign in if you are not already.
