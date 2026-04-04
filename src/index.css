@@ -18,9 +18,6 @@ body.dark-mode {
   color: white;
 }
 
-.image-button{
-  cursor: pointer;
-}
 .dark-mode{
   .settings-container {
     border: 2px solid rgb(65, 65, 65);
@@ -81,6 +78,16 @@ body.dark-mode {
     border-radius: 10px;
     padding: 10px;
     margin-top: 20px;
+  }
+
+  .file-too-large.file-item-container{
+    border: 2px solid rgb(255, 82, 82) !important;
+    background-color: rgb(180, 27, 27) !important;
+  }
+
+  p.file-too-large-text, p.incompatible-file-type-text{
+    display: none;
+    color: white;
   }
 }
 
@@ -145,12 +152,23 @@ body.dark-mode {
       padding: 10px;
       margin-top: 20px;
     }
+
+    .file-too-large.file-item-container{
+      border: 2px solid rgb(255, 0, 0) !important;
+      background-color: rgb(255, 200, 200) !important;
+    }
+
+    p.file-too-large-text, p.incompatible-file-type-text{
+      display: none;
+      color: black;
+    }
     
 }
 
 select{
   cursor: pointer;
 }
+
 
 .header-container-image{
   display: flex;
@@ -204,3 +222,21 @@ select{
   justify-content: center;
   justify-self: center;
 }
+
+  .file-too-large p.file-too-large-text, .incompatible-file-type p.incompatible-file-type-text{
+    display: block;
+  }
+
+  .image-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    filter:brightness(1);
+    transform: scale(1);
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+
+  .image-button:hover{
+    filter: brightness(0.8);
+    transform: scale(1.1);
+  }

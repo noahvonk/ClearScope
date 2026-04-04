@@ -1,0 +1,50 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+self["webpackHotUpdateClearScope"]("main_window",{
+
+/***/ "./src/components/fileitem.jsx"
+/*!*************************************!*\
+  !*** ./src/components/fileitem.jsx ***!
+  \*************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ FileItem)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n\nconst deleteIconWhite = new URL(/* asset import */ __webpack_require__(/*! ../../assets/images/trash-can-white.png */ \"./assets/images/trash-can-white.png\"), __webpack_require__.b);\nconst deleteIconBlack = new URL(/* asset import */ __webpack_require__(/*! ../../assets/images/trash-can.png */ \"./assets/images/trash-can.png\"), __webpack_require__.b);\nfunction FileItem({\n  index,\n  file,\n  selectedFiles,\n  setSelectedFiles\n}) {\n  const fileIndex = index;\n  let classes = 'file-item-container';\n  if (file.size > 10 * 1024 * 1024) {\n    classes += ' file-too-large';\n  }\n  let fileSize = file.size;\n  if (fileSize < 1024) {\n    fileSize = `${fileSize} bytes`;\n  } else if (fileSize < 1024 * 1024) {\n    fileSize = `${(fileSize / 1024).toFixed(2)} KB`;\n  } else {\n    fileSize = `${(fileSize / (1024 * 1024)).toFixed(2)} MB`;\n  }\n  function handleDelete() {\n    const newSelectedFiles = selectedFiles.filter((_, index) => index !== fileIndex);\n    setSelectedFiles(newSelectedFiles);\n  }\n  // Create a ui item to represent a file that has been uploaded, its name, file type, its size and a delete button to remove it from the list of uploaded files.\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"div\", {\n    className: classes\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"div\", {\n    className: \"file-item-row\"\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"h3\", null, file.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"p\", null, \"Size: \", fileSize)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"div\", {\n    className: \"file-item-row\"\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"p\", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"b\", null, file.type.split('/')[1].toUpperCase())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"img\", {\n    className: \"delete-button\",\n    src: new URL(/* asset import */ Object(function webpackMissingModule() { var e = new Error(\"Cannot find module '../../assets/images/delete.png'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), __webpack_require__.b),\n    width: \"24\",\n    height: \"24\",\n    alt: \"Delete Icon\",\n    onClick: handleDelete\n  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"button\", {\n    className: \"delete-button\",\n    onClick: handleDelete\n  }, \"Delete\")));\n}//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvY29tcG9uZW50cy9maWxlaXRlbS5qc3giLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQW1EO0FBRW5ELE1BQU1HLGVBQWUsR0FBRyxJQUFJQyxHQUFHLENBQUMsbUpBQTBELENBQUM7QUFDM0YsTUFBTUksZUFBZSxHQUFHLElBQUlKLEdBQUcsQ0FBQyx1SUFBb0QsQ0FBQztBQUV0RSxTQUFTSyxRQUFRQSxDQUFDO0VBQUVDLEtBQUs7RUFBRUMsSUFBSTtFQUFFQyxhQUFhO0VBQUVDO0FBQWlCLENBQUMsRUFBRTtFQUUvRSxNQUFNQyxTQUFTLEdBQUdKLEtBQUs7RUFFdkIsSUFBSUssT0FBTyxHQUFHLHFCQUFxQjtFQUNuQyxJQUFHSixJQUFJLENBQUNLLElBQUksR0FBRyxFQUFFLEdBQUcsSUFBSSxHQUFHLElBQUksRUFBQztJQUM1QkQsT0FBTyxJQUFJLGlCQUFpQjtFQUNoQztFQUVBLElBQUlFLFFBQVEsR0FBR04sSUFBSSxDQUFDSyxJQUFJO0VBQ3hCLElBQUdDLFFBQVEsR0FBRyxJQUFJLEVBQUM7SUFDZkEsUUFBUSxHQUFHLEdBQUdBLFFBQVEsUUFBUTtFQUNsQyxDQUFDLE1BQU0sSUFBR0EsUUFBUSxHQUFHLElBQUksR0FBRyxJQUFJLEVBQUM7SUFDN0JBLFFBQVEsR0FBRyxHQUFHLENBQUNBLFFBQVEsR0FBRyxJQUFJLEVBQUVDLE9BQU8sQ0FBQyxDQUFDLENBQUMsS0FBSztFQUNuRCxDQUFDLE1BQU07SUFDSEQsUUFBUSxHQUFHLEdBQUcsQ0FBQ0EsUUFBUSxJQUFJLElBQUksR0FBRyxJQUFJLENBQUMsRUFBRUMsT0FBTyxDQUFDLENBQUMsQ0FBQyxLQUFLO0VBQzVEO0VBRUEsU0FBU0MsWUFBWUEsQ0FBQSxFQUFFO0lBQ25CLE1BQU1DLGdCQUFnQixHQUFHUixhQUFhLENBQUNTLE1BQU0sQ0FBQyxDQUFDQyxDQUFDLEVBQUVaLEtBQUssS0FBS0EsS0FBSyxLQUFLSSxTQUFTLENBQUM7SUFDaEZELGdCQUFnQixDQUFDTyxnQkFBZ0IsQ0FBQztFQUN0QztFQUNBO0VBQ0Esb0JBQ0lwQiwwREFBQTtJQUFLd0IsU0FBUyxFQUFFVDtFQUFRLGdCQUNwQmYsMERBQUE7SUFBS3dCLFNBQVMsRUFBQztFQUFlLGdCQUMxQnhCLDBEQUFBLGFBQUtXLElBQUksQ0FBQ2MsSUFBUyxDQUFDLGVBQ3BCekIsMERBQUEsWUFBRyxRQUFNLEVBQUNpQixRQUFZLENBQ3JCLENBQUMsZUFDTmpCLDBEQUFBO0lBQUt3QixTQUFTLEVBQUM7RUFBZSxnQkFDMUJ4QiwwREFBQSx5QkFBR0EsMERBQUEsWUFBSVcsSUFBSSxDQUFDZSxJQUFJLENBQUNDLEtBQUssQ0FBQyxHQUFHLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQ0MsV0FBVyxDQUFDLENBQUssQ0FBSSxDQUFDLGVBRXJENUIsMERBQUE7SUFBS3dCLFNBQVMsRUFBQyxlQUFlO0lBQUNLLEdBQUcsRUFBRSxJQUFJekIsR0FBRyxDQUFDLHVNQUFpRCxDQUFFO0lBQUMwQixLQUFLLEVBQUMsSUFBSTtJQUFDQyxNQUFNLEVBQUMsSUFBSTtJQUFDQyxHQUFHLEVBQUMsYUFBYTtJQUFDQyxPQUFPLEVBQUVkO0VBQWEsQ0FBRSxDQUFDLGVBQ2xLbkIsMERBQUE7SUFBUXdCLFNBQVMsRUFBQyxlQUFlO0lBQUNTLE9BQU8sRUFBRWQ7RUFBYSxHQUFDLFFBQWMsQ0FDdEUsQ0FDSixDQUFDO0FBRWQiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9DbGVhclNjb3BlLy4vc3JjL2NvbXBvbmVudHMvZmlsZWl0ZW0uanN4PzgwZTQiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0LCB7IHVzZVN0YXRlLCB1c2VFZmZlY3QgfSBmcm9tICdyZWFjdCc7XHJcblxyXG5jb25zdCBkZWxldGVJY29uV2hpdGUgPSBuZXcgVVJMKCcuLi8uLi9hc3NldHMvaW1hZ2VzL3RyYXNoLWNhbi13aGl0ZS5wbmcnLCBpbXBvcnQubWV0YS51cmwpO1xyXG5jb25zdCBkZWxldGVJY29uQmxhY2sgPSBuZXcgVVJMKCcuLi8uLi9hc3NldHMvaW1hZ2VzL3RyYXNoLWNhbi5wbmcnLCBpbXBvcnQubWV0YS51cmwpO1xyXG5cclxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gRmlsZUl0ZW0oeyBpbmRleCwgZmlsZSwgc2VsZWN0ZWRGaWxlcywgc2V0U2VsZWN0ZWRGaWxlcyB9KSB7XHJcblxyXG4gICAgY29uc3QgZmlsZUluZGV4ID0gaW5kZXg7XHJcblxyXG4gICAgbGV0IGNsYXNzZXMgPSAnZmlsZS1pdGVtLWNvbnRhaW5lcic7XHJcbiAgICBpZihmaWxlLnNpemUgPiAxMCAqIDEwMjQgKiAxMDI0KXtcclxuICAgICAgICBjbGFzc2VzICs9ICcgZmlsZS10b28tbGFyZ2UnO1xyXG4gICAgfVxyXG5cclxuICAgIGxldCBmaWxlU2l6ZSA9IGZpbGUuc2l6ZTtcclxuICAgIGlmKGZpbGVTaXplIDwgMTAyNCl7XHJcbiAgICAgICAgZmlsZVNpemUgPSBgJHtmaWxlU2l6ZX0gYnl0ZXNgO1xyXG4gICAgfSBlbHNlIGlmKGZpbGVTaXplIDwgMTAyNCAqIDEwMjQpe1xyXG4gICAgICAgIGZpbGVTaXplID0gYCR7KGZpbGVTaXplIC8gMTAyNCkudG9GaXhlZCgyKX0gS0JgO1xyXG4gICAgfSBlbHNlIHtcclxuICAgICAgICBmaWxlU2l6ZSA9IGAkeyhmaWxlU2l6ZSAvICgxMDI0ICogMTAyNCkpLnRvRml4ZWQoMil9IE1CYDtcclxuICAgIH1cclxuXHJcbiAgICBmdW5jdGlvbiBoYW5kbGVEZWxldGUoKXtcclxuICAgICAgICBjb25zdCBuZXdTZWxlY3RlZEZpbGVzID0gc2VsZWN0ZWRGaWxlcy5maWx0ZXIoKF8sIGluZGV4KSA9PiBpbmRleCAhPT0gZmlsZUluZGV4KTtcclxuICAgICAgICBzZXRTZWxlY3RlZEZpbGVzKG5ld1NlbGVjdGVkRmlsZXMpO1xyXG4gICAgfVxyXG4gICAgLy8gQ3JlYXRlIGEgdWkgaXRlbSB0byByZXByZXNlbnQgYSBmaWxlIHRoYXQgaGFzIGJlZW4gdXBsb2FkZWQsIGl0cyBuYW1lLCBmaWxlIHR5cGUsIGl0cyBzaXplIGFuZCBhIGRlbGV0ZSBidXR0b24gdG8gcmVtb3ZlIGl0IGZyb20gdGhlIGxpc3Qgb2YgdXBsb2FkZWQgZmlsZXMuXHJcbiAgICByZXR1cm4oXHJcbiAgICAgICAgPGRpdiBjbGFzc05hbWU9e2NsYXNzZXN9PlxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZpbGUtaXRlbS1yb3dcIj4gICAgICAgICAgICBcclxuICAgICAgICAgICAgICAgIDxoMz57ZmlsZS5uYW1lfTwvaDM+XHJcbiAgICAgICAgICAgICAgICA8cD5TaXplOiB7ZmlsZVNpemV9PC9wPlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmaWxlLWl0ZW0tcm93XCI+XHJcbiAgICAgICAgICAgICAgICA8cD48Yj57ZmlsZS50eXBlLnNwbGl0KCcvJylbMV0udG9VcHBlckNhc2UoKX08L2I+PC9wPlxyXG5cclxuICAgICAgICAgICAgICAgIDxpbWcgY2xhc3NOYW1lPVwiZGVsZXRlLWJ1dHRvblwiIHNyYz17bmV3IFVSTCgnLi4vLi4vYXNzZXRzL2ltYWdlcy9kZWxldGUucG5nJywgaW1wb3J0Lm1ldGEudXJsKX0gd2lkdGg9XCIyNFwiIGhlaWdodD1cIjI0XCIgYWx0PVwiRGVsZXRlIEljb25cIiBvbkNsaWNrPXtoYW5kbGVEZWxldGV9IC8+XHJcbiAgICAgICAgICAgICAgICA8YnV0dG9uIGNsYXNzTmFtZT1cImRlbGV0ZS1idXR0b25cIiBvbkNsaWNrPXtoYW5kbGVEZWxldGV9PkRlbGV0ZTwvYnV0dG9uPlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICA8L2Rpdj5cclxuICAgIClcclxufSJdLCJuYW1lcyI6WyJSZWFjdCIsInVzZVN0YXRlIiwidXNlRWZmZWN0IiwiZGVsZXRlSWNvbldoaXRlIiwiVVJMIiwiaW1wb3J0IiwibWV0YSIsInVybCIsImRlbGV0ZUljb25CbGFjayIsIkZpbGVJdGVtIiwiaW5kZXgiLCJmaWxlIiwic2VsZWN0ZWRGaWxlcyIsInNldFNlbGVjdGVkRmlsZXMiLCJmaWxlSW5kZXgiLCJjbGFzc2VzIiwic2l6ZSIsImZpbGVTaXplIiwidG9GaXhlZCIsImhhbmRsZURlbGV0ZSIsIm5ld1NlbGVjdGVkRmlsZXMiLCJmaWx0ZXIiLCJfIiwiY3JlYXRlRWxlbWVudCIsImNsYXNzTmFtZSIsIm5hbWUiLCJ0eXBlIiwic3BsaXQiLCJ0b1VwcGVyQ2FzZSIsInNyYyIsIndpZHRoIiwiaGVpZ2h0IiwiYWx0Iiwib25DbGljayJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/components/fileitem.jsx\n\n}");
+
+/***/ },
+
+/***/ "./assets/images/trash-can-white.png"
+/*!*******************************************!*\
+  !*** ./assets/images/trash-can-white.png ***!
+  \*******************************************/
+(module, __unused_webpack_exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "cc89a2f8a00d3d006871.png";
+
+/***/ },
+
+/***/ "./assets/images/trash-can.png"
+/*!*************************************!*\
+  !*** ./assets/images/trash-can.png ***!
+  \*************************************/
+(module, __unused_webpack_exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "92881cf98b591daca7ae.png";
+
+/***/ }
+
+},
+/******/ function(__webpack_require__) { // webpackRuntimeModules
+/******/ /* webpack/runtime/getFullHash */
+/******/ (() => {
+/******/ 	__webpack_require__.h = () => ("2c62b819a6555c3d4bca")
+/******/ })();
+/******/ 
+/******/ }
+);

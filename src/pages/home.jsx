@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import FileLoader from '../components/fileloader.jsx';
 import {RenderPage, RenderDefault} from '../App.jsx';
+
+// load all of our required files as consts as we only will need to access their contents, not replace them.
 const gearIconWhite = new URL('../../assets/images/gear-white.png', import.meta.url);
 const gearIconBlack = new URL('../../assets/images/gear.png', import.meta.url);
 const routes = require('../../routes.json');
@@ -12,12 +14,16 @@ const routes = require('../../routes.json');
  * @returns Page component for the Home page, including file upload functionality and navigation to settings.
  */
 export default function Home({currentPage, setCurrentPage}){
+    
+    // set our gear icon based on the current theme
     let gearIcon;
     if(document.body.classList.contains('dark-mode')){
         gearIcon = gearIconWhite;
     } else {
         gearIcon = gearIconBlack;
     }
+
+    // when the component mounts, set the theme based on the user's preferences. This page acts as a wrapper for the File Loader component.
     return (
         <div className="home-container">
             <div className="header-container-image">

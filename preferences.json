@@ -3,9 +3,10 @@
     "theme": "default"
   },
   "apis": {
-    "claude_api_key": "asdasdasd",
+    "claude_api_key": "",
     "anthropic_api_key": "",
     "trello_api_key": "",
-    "trello_api_token": ""
-  }
+    "trello_api_secret": ""
+  },
+  "maxFileSize": 10485760
 }
