@@ -3,25 +3,34 @@
 
 Let's get you setup with ClearScope.
 
+**This program is still under developerment and is missing some features. The UI is lacking in some spots.**
+
 <h2>Collecting API Keys</h2>
 
 <h3>Claude</h3>
+<hr>
+Start by visiting this link and logging in using whichever means you choose. [https://platform.claude.com/](https://platform.claude.com/).
 
-<h3>Trello</h3>
-<hr></hr>
-Start by creating a board if you have not already. We will use this board to store all of the output from the application.
+Once you have created an account you will need to create a new API key. On the left locate the "Manage" section and click on the "API keys" button.
 
-Once you have a board created, navigate to this link, <a url="https://trello.com/power-ups/admin"> https://trello.com/power-ups/admin </a> and sign in if you are not already.
-Next, we are going to create a new powerup.
-<br>
-<img width="856" height="854" alt="image" src="https://github.com/user-attachments/assets/6f1c63fc-d106-4447-9329-795d1145ec73" />
-<br>
-We aren't really going to make a Trello powerup, so what you enter here doesn't matter. Just use any info you want and make sure to use an https served url for the Iframe Connector.
-Once the powerup has been created, you will be brought to this page.
-<br>
-<img width="866" height="504" alt="image" src="https://github.com/user-attachments/assets/a7c88886-5d2e-4df1-a3bb-886ab524bfe4" />
-<br>
-Store the **API** and **secret** keys somewhere safe, we will need them soon.
+In the top right you will see a button labeled "Create key" click this. A popup will appear, name your key whatever you like and press "add". Next a string of characters will appear. That is your API key. Make sure to store it in a safe place as you wont be able to view it again. Once you have it saved, press "Close".
 
-Program still under development, full read me to come.
+Next you need to add some credits to your account. Head over to the left side again and locate the "Claude Code" section and press on the "preferences button". On this page locate "Billing" and press on it. Add a minimum of $5(USD) to your account. Once that is complete you are all finished in the Claude Console.
+
+<h2>Setting Up ClearScope</h2>
+
+<h3>Windows</h3>
+<hr>
+
+Now we can start using ClearScope. Download the latest build for Windows from GitHub, extract it and run "ClearScope-x.x.x Setup.exe". This will install ClearScope on your PC. The program should be registered as an application and have a shortcut installed on the desktop. Either press the Windows button in your taskbar and search "ClearScope" or find its shortcut on your desktop. Once its running, we are nearly ready to start using ClearScope.
+
+<h3>Inputing API Keys</h3>
+<hr>
+
+Locate the gear icon in the top right and click on it. You should now be in the settings. Locate the "API Keys" section and find the "Claude API Key" subsection. Don't worry about any of the other keys, they are not implemented yet. Enter the Claude Key you made earlier here. Once you have entered it, scroll down to the bottom of the settings page and press the "Save" button. There is no confirmation yet, but your settings should be saved. If you are unsure, go back to the homepage by pressing the back arrow at the top of the page and clicking the gear to return to the settings page.
+
+<h3>Using ClearScope</h3>
+<hr>
+
+Now that our API key is entered you can drop files into the file upload container by either dragging and dropping files on it or clicking on it. Once you have uploaded your files, press the "Upload Files" button and the files will be sent off and a loading screen will be displayed until the response is ready. Once the response is ready you will be shown a list of tasks. All of the tasks have editable fields so if you don't like what the agent suggested, you can change it before exporting. Unfortunetly, exporting is not ready yet. Once it is, I will update this read me with more information.
 
