@@ -9,7 +9,7 @@ Let's get you setup with ClearScope.
 
 <h3>Claude</h3>
 <hr>
-Start by visiting this link and logging in using whichever means you choose. [https://platform.claude.com/](https://platform.claude.com/).
+Start by visiting this link and logging in using whichever means you choose. https://platform.claude.com/.
 
 Once you have created an account you will need to create a new API key. On the left locate the "Manage" section and click on the "API keys" button.
 
