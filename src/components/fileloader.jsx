@@ -4,13 +4,17 @@ import FileItem from './fileitem.jsx';
 const uploadIconWhite = new URL('../../assets/images/up-loading-white.png', import.meta.url);
 const uploadIconBlack = new URL('../../assets/images/up-loading.png', import.meta.url);
 
-const preferences = require('../../preferences.json');
+let preferences;
 
-const maxSize = parseInt(preferences.maxFileSize) || 10; // max file size in MB, default to 10MB if not set in preferences
+let maxSize;
 
-export default function FileLoader(){
+export default function FileLoader({ setFilesUploading, setFiles }) {
 
     const [selectedFiles, setSelectedFiles] = useState([]);
+
+    preferences = JSON.parse(window.electronAPI.readFile(window.electronAPI.getAppPath()));
+
+    maxSize = preferences.maxFileSize || 10 * 1024 * 1024; // max file size in MB, default to 10MB if not set in preferences
 
     // sets the upload icon based on the current theme, defaults to black if no theme is set. This is done to ensure that the icon is visible in both light and dark modes. The icons are stored in the assets folder and imported as URLs.
     let uploadIcon = uploadIconBlack;
@@ -20,17 +24,9 @@ export default function FileLoader(){
         uploadIcon = uploadIconBlack;
     }
 
-    useEffect(() => {
-        // disable the upload button if there are no selected files, enable it otherwise. Also checks if the button exists to avoid errors.
-        if(document.querySelector('#upload-files-button') == null){
-            return;
-        }
-        if(selectedFiles.length <= 0){
-            document.querySelector('#upload-files-button').disabled = true;
-        } else {
-            document.querySelector('#upload-files-button').disabled = false;
-        }
-    }, [selectedFiles])
+    if(!window.electronAPI.fileExists(window.electronAPI.getAppPath())){
+        window.electronAPI.readFile(window.electronAPI.getAppPath());
+    }
 
     // handles the selection of files through the file input, loads them into the state. Which has a side effect of creating a list of selected files.
     function handleFileSelect(event) {
@@ -42,10 +38,12 @@ export default function FileLoader(){
 
     // handles the upload of files, currently just logs the files to the console, but can be expanded to include actual upload functionality.
     function handleFileDrop(event) {
+        console.log("Uploading files...");
         event.preventDefault();
-        const files = Array.from(event.dataTransfer.files);
+        setFilesUploading(true);
+        setFiles(selectedFiles);
+        console.log(selectedFiles);
         setSelectedFiles(null);
-        console.log(files);
     }
 
     function getMaxSize(){
@@ -53,10 +51,10 @@ export default function FileLoader(){
         if(maxSize < 1024){
             return maxSize + " bytes";
         } else if( maxSize < 1024 * 1024){
-            return maxSize + " kb";
+            return (maxSize / 1024).toFixed(2) + " KB";
         }
         else{
-            return maxSize / (1024 * 1024)  + " MB"
+            return (maxSize / (1024 * 1024)).toFixed(2) + " MB";
         }
     }
 
@@ -68,10 +66,10 @@ return (
         <img className="upload-icon" src={uploadIcon} width="48" height="48" alt="Upload Icon" />
         <p>Drag and drop files here or click to browse. (Max file size: {getMaxSize()})</p>
         <p>Files can include: Design Documents, Decks, Meeting Notes, etc.</p>
-        <input className='file-input' type="file" id="fileInput" multiple onChange={handleFileSelect}>
+        <input className='file-input' accept="text/plain,application/pdf,image/jpeg,image/png,image/gif,image/webp,application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/csv, application/rtf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/msword, application/vnd.ms-excel" type="file" id="fileInput" multiple onChange={handleFileSelect}>
         </input>
     </div>
-    <button id='upload-files-button' className="button-accept center-button" disabled onClick={handleFileDrop}>Upload Files</button>
+    <button id='upload-files-button' className="button-accept center-button" disabled={selectedFiles.length === 0} onClick={(e) => handleFileDrop(e)}>Upload Files</button>
     {/*The UI for displaying all selected files*/}
     <div className="selected-files-container">
         <h3>Selected Files:</h3>

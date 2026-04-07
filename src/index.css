@@ -1,7 +1,7 @@
 body.light-mode {
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-    sans-serif;
+    sans-serif !important;
   margin: none !important;
   padding: 2rem;
   background-color: rgb(255, 255, 255);
@@ -11,7 +11,7 @@ body.light-mode {
 body.dark-mode {
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-    sans-serif;
+    sans-serif !important;
   margin: none !important;
   padding: 2rem;
   background-color: rgb(17, 17, 17);
@@ -24,14 +24,14 @@ body.dark-mode {
     border-radius: 10px;
     padding: 10px;
   }
-  input, select {
+  input, select, textarea{
     background-color: rgb(53, 53, 53);
     color: white;
     padding: 10px;
     border: 1px solid rgb(70, 70, 70);
     border-radius: 10px;
   }
-  input:focus, select:focus{
+  input:focus, select:focus, textarea:focus{
     outline: 1px solid rgb(100, 100, 100);
     border: 1px solid rgb(100, 100, 100);
   }
@@ -89,15 +89,36 @@ body.dark-mode {
     display: none;
     color: white;
   }
+
+  .agent-response-container{
+    border: 2px solid rgb(70, 70, 70);
+    background-color: #202020;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+    min-height: 300px;
+  }
+
+  .header-container-image{
+    background-color: rgb(17, 17, 17);
+  }
+
+  .task-item{
+    border: 1px solid  rgb(70, 70, 70);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
 }
 
 .light-mode{
+  
     .settings-container {
       border: 2px solid rgb(200, 200, 200);
       border-radius: 10px;
       padding: 10px;
     }
-    input, select {
+    input, select, textarea {
       background-color: rgb(240, 240, 240);
       color: rgb(0, 0, 0);
       padding: 10px;
@@ -162,7 +183,49 @@ body.dark-mode {
       display: none;
       color: black;
     }
+
+    .agent-response-container{
+      border: 2px solid rgb(200, 200, 200);
+      background-color: rgb(240, 240, 240);
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 20px;
+          min-height: 300px;
+    }
+
+    .header-container-image{
+      background-color: white;
+    }
+
+    .task-item{
+      border: 1px solid rgb(200, 200, 200);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: rgb(240, 240, 240);
+    }
     
+}
+
+#loading-text{
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+.fade-hide{
+  opacity: 0 !important;
+}
+
+body{
+  height: 100vh;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.app-container, .home-page-container, .home-container, .response-container{
+  height: 100%;
 }
 
 select{
@@ -176,6 +239,9 @@ select{
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  position: sticky;
+  top: 0;
+  width: 100%;
 }
 
 .file-input{
@@ -240,3 +306,146 @@ select{
     filter: brightness(0.8);
     transform: scale(1.1);
   }
+
+  .loading-spinner-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 10px;
+  }
+
+  .export-stack{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .export-stack .button-accept{
+    margin:0px;
+    padding: 10px 20px;
+  }
+
+  .loading-spinner{
+    transform: scale(1);
+  }
+
+  .task-description{
+    white-space: pre-wrap;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    width: 100%;
+    height: 100%; 
+    box-sizing: border-box;
+  }
+
+  .task-title{
+    width: 100%;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+
+  label{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .task-details-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+
+  .task-item label{
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .task-details-container-fullwidth{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .task-details-subcontainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .task-details-subcontainer label{
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .task-details-subcontainer input, .task-details-subcontainer select{
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  textarea{
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .task-priority{
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+    width: 50%;
+    box-sizing: border-box;
+  }
+
+  .task-priority.Critical{
+    border-color: rgb(255, 54, 54) !important;
+    outline: none;
+  }
+
+  .task-priority.Critical:focus{
+    outline: 1px solid rgb(255, 54, 54) !important;
+  }
+
+  .task-priority.High{
+    border-color: rgb(255, 140, 0) !important;
+    outline: none;
+  }
+
+    .task-priority.High:focus{
+    outline: 1px solid rgb(255, 140, 0) !important;
+  }
+
+  .task-priority.Medium{
+    border-color: rgb(255, 206, 0) !important;
+  }
+
+  .task-priority.Medium:focus{
+    outline: 1px solid rgb(255, 206, 0) !important;
+  }
+
+  .task-priority.Low{
+    border-color: rgb(0, 128, 0) !important;
+  }
+
+  .task-priority.Low:focus{
+    outline: 1px solid rgb(0, 128, 0) !important;
+  }
+

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import FileLoader from '../components/fileloader.jsx';
 import {RenderPage, RenderDefault} from '../App.jsx';
+import AgentResponseContainer from '../components/agentResponseContainer.jsx';
 
 // load all of our required files as consts as we only will need to access their contents, not replace them.
 const gearIconWhite = new URL('../../assets/images/gear-white.png', import.meta.url);
@@ -14,7 +15,9 @@ const routes = require('../../routes.json');
  * @returns Page component for the Home page, including file upload functionality and navigation to settings.
  */
 export default function Home({currentPage, setCurrentPage}){
-    
+
+    const [filesUploading, setFilesUploading] = useState(false);
+    const [files, setFiles] = useState([]);
     // set our gear icon based on the current theme
     let gearIcon;
     if(document.body.classList.contains('dark-mode')){
@@ -32,7 +35,7 @@ export default function Home({currentPage, setCurrentPage}){
             <img className="image-button" src={gearIcon} width="32" height="32" alt="Gear Icon" onClick={() => setCurrentPage(routes.SETTINGS)} />
 
             </div>
-            <FileLoader />
+        {!filesUploading ? <FileLoader setFilesUploading={setFilesUploading} setFiles={setFiles}/> : <AgentResponseContainer files={files} />}
         </div>
     )
 }

@@ -1,57 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { RenderDefault, SetTheme } from '../App.jsx';
+import { SetTheme } from '../App.jsx';
 
 // load all of our required files as consts as we only will need to access their contents, not replace them.
 const backArrowIconWhite = new URL('../../assets/images/back-arrow-white.png', import.meta.url);
 const backArrowIconBlack = new URL('../../assets/images/back-arrow.png', import.meta.url);
 const routes = require('../../routes.json');
-
-// Loads our preferences file as a mutable variable so we can read and write to it in the settings page. This will need to be placed in a different location outside of the project to allow the file to be accesses in builds, but this works for development.
-// The file is written to the user's app data folder in production, but we can read and write to it here for development purposes.
-// TODO: Move this to a different location and create the file if it doesn't exist, with default values.
-let preferences = require('../../preferences.json');
-
-/**
- * ShowClaudeKey toggles the visibility of the Claude API key input field in the Settings page. When the associated checkbox is checked, the input field is set to "password" type, hiding the API key. When unchecked, the input field is set to "text" type, revealing the API key for the user to view or edit.
- */
-function ShowClaudeKey(){
-
-    // grab the claude api key input and toggle its type based on the checkbox state
-    const claudeKeyInput = document.querySelector('.claude-api-key');
-    if(document.querySelector('#claudeKeyCheckbox').checked){
-        claudeKeyInput.type = "password";
-    } else {
-        claudeKeyInput.type = "text";
-    }
-}
-
-/**
- * ShowTrelloKey toggles the visibility of the Trello API key input field in the Settings page. When the associated checkbox is checked, the input field is set to "password" type, hiding the API key. When unchecked, the input field is set to "text" type, revealing the API key for the user to view or edit.
- */
-function ShowTrelloKey(){
-
-    // grab the trello api key input and toggle its type based on the checkbox state
-    const trelloKeyInput = document.querySelector('.trello-api-key');
-    if(document.querySelector('#trelloKeyCheckbox').checked){
-        trelloKeyInput.type = "password";
-    } else {
-        trelloKeyInput.type = "text";
-    }
-}
-
-/**
- * ShowTrelloSecret toggles the visibility of the Trello API secret input field in the Settings page. When the associated checkbox is checked, the input field is set to "password" type, hiding the API secret. When unchecked, the input field is set to "text" type, revealing the API secret for the user to view or edit.
- */
-function ShowTrelloSecret(){
-
-    // grab the trello api secret input and toggle its type based on the checkbox state
-    const trelloSecretInput = document.querySelector('.trello-api-secret');
-    if(document.querySelector('#trelloSecretCheckbox').checked){
-        trelloSecretInput.type = "password";
-    } else {
-        trelloSecretInput.type = "text";
-    }
-}
 
 /** The Settings component provides an interface for users to configure their ClearScope preferences, including API key management and appearance settings.
  * 
@@ -60,6 +13,34 @@ function ShowTrelloSecret(){
  * @returns Page component for the Settings page, including options for managing API keys and toggling between light and dark themes, as well as navigation back to the Home page.
  */
 export default function Settings({currentPage, setCurrentPage}){
+
+    // Load preferences file
+    const [preferences, setPreferences] = useState(() => JSON.parse(window.electronAPI.readFile(window.electronAPI.getAppPath())));
+    console.log(preferences);
+
+    // set all useStates now that preferences is loaded, this will allow us to have the current values of the preferences in the state, and we can update them as needed when the user makes changes in the settings page. This is important for ensuring that the UI reflects the current preferences and allows for real-time updates as the user interacts with the settings.
+    const [showClaudeKey, setShowClaudeKey] = useState(preferences.apis.claude_api_key.length > 0 ? true : false);
+    const [showTrelloKey, setShowTrelloKey] = useState(preferences.apis.trello_api_key.length > 0 ? true : false);
+    const [showTrelloSecret, setShowTrelloSecret] = useState(preferences.apis.trello_api_secret.length > 0 ? true : false);
+    const [claudeApiKey, setClaudeApiKey] = useState(preferences.apis.claude_api_key || '');
+    const [trelloApiKey, setTrelloApiKey] = useState(preferences.apis.trello_api_key || '');
+    const [theme, setTheme] = useState(preferences.settings.theme || 'default');
+    const [trelloApiSecret, setTrelloApiSecret] = useState(preferences.apis.trello_api_secret || '');
+    const [maxFileSize, setMaxFileSize] = useState(preferences.maxFileSize || 10 * 1024 * 1024);
+    const [maxTokens, setMaxTokens] = useState(preferences.apis.claude_max_tokens || 1024);
+
+    function setTokens(e){
+        if(e.target.value < 1024){
+            setMaxTokens(1024);
+            e.target.value = 1024;
+        }
+        else if(e.target.value > 65536){
+            setMaxTokens(65536);
+            e.target.value = 65536;
+        } else {
+            setMaxTokens(e.target.value);
+        }
+    }
 
     // set the back arrow icon based on the current theme
     let backArrowIcon = backArrowIconWhite;
@@ -75,30 +56,29 @@ export default function Settings({currentPage, setCurrentPage}){
      */
     function SaveSettings(event){
         event.preventDefault();
-        const filePath = window.electronAPI.getAppPath();
-        preferences.settings.theme = document.querySelector('.theme-select').value;
-        preferences.apis.claude_api_key = document.querySelector('.claude-api-key').value;
-        preferences.maxFileSize = parseInt(document.querySelector('.max-file-size').value);
+        const newPreferences = {...preferences,
+            settings: {
+                ...preferences.settings,
+                theme: theme
+            },
+            apis: {
+                ...preferences.apis,
+                claude_api_key: claudeApiKey,
+                trello_api_key: trelloApiKey,
+                trello_api_secret: trelloApiSecret,
+                claude_max_tokens: maxTokens
+            },
+            maxFileSize: maxFileSize
+        };
         try {
-            window.electronAPI.writeFile(filePath, JSON.stringify(preferences, null, 2));
+            window.electronAPI.writeFile(window.electronAPI.getAppPath(), JSON.stringify(newPreferences, null, 2));
+            setPreferences(newPreferences);
+            SetTheme();
             console.log('Preferences saved successfully!');
         } catch (err) {
             console.error('Error saving preferences:', err);
         }
     }
-
-    useEffect(() => {
-
-        // Set defaults
-        document.querySelector('.theme-select').value = preferences.settings.theme;
-        document.querySelector('.claude-api-key').value = preferences.apis.claude_api_key;
-
-        // if the key is empty, uncheck the checkbox and show the input
-        if(preferences.apis.claude_api_key.length <= 0){
-            document.querySelector('#claudeKeyCheckbox').checked = false;
-            ShowClaudeKey();
-        }
-    }), []
 
     // The settings page includes options for managing API keys and toggling between light and dark themes, as well as navigation back to the Home page.
     return (
@@ -115,24 +95,24 @@ export default function Settings({currentPage, setCurrentPage}){
                 <div className="sub-item-container"> 
                     <h3>Claude API Key</h3>
                     <div>
-                        <input id="claude-api-key" className="claude-api-key" type="password" placeholder="Enter your Claude API Key" />
-                        <input type='checkbox' id="claudeKeyCheckbox" defaultChecked onChange={ShowClaudeKey} />
+                        <input id="claude-api-key" className="claude-api-key" defaultValue={claudeApiKey} type={showClaudeKey ? "password" : "text"} placeholder="Enter your Claude API Key" onChange={(e) => setClaudeApiKey(e.target.value)} />
+                        <input type='checkbox' id="claudeKeyCheckbox" defaultChecked={showClaudeKey} onChange={() => setShowClaudeKey(!showClaudeKey)} />
                         <label htmlFor="claudeKeyCheckbox">Hide API Key</label>
                     </div>
                 </div>
                 <div className="sub-item-container"> 
                     <h3>Trello API Key</h3>
                     <div>
-                        <input id="trello-api-key" className="trello-api-key" type="password" placeholder="Enter your Trello API Key" />
-                        <input type='checkbox' id="trelloKeyCheckbox" defaultChecked onChange={ShowTrelloKey} />
+                        <input id="trello-api-key" className="trello-api-key" defaultValue={trelloApiKey} type={showTrelloKey ? "password" : "text"} placeholder="Enter your Trello API Key" onChange={(e) => setTrelloApiKey(e.target.value)} />
+                        <input type='checkbox' id="trelloKeyCheckbox" defaultChecked={showTrelloKey} onChange={() => setShowTrelloKey(!showTrelloKey)} />
                         <label htmlFor="trelloKeyCheckbox">Hide API Key</label>
                     </div>
                 </div>
                 <div className="sub-item-container"> 
                     <h3>Trello API Secret</h3>
                     <div>
-                        <input id="trello-api-secret" className="trello-api-secret" type="password" placeholder="Enter your Trello API Secret" />
-                        <input type='checkbox' id="trelloSecretCheckbox" defaultChecked onChange={ShowTrelloSecret} />
+                        <input id="trello-api-secret" className="trello-api-secret" defaultValue={trelloApiSecret} type={showTrelloSecret ? "password" : "text"} placeholder="Enter your Trello API Secret" onChange={(e) => setTrelloApiSecret(e.target.value)} />
+                        <input type='checkbox' id="trelloSecretCheckbox" defaultChecked={showTrelloSecret} onChange={() => setShowTrelloSecret(!showTrelloSecret)} />
                         <label htmlFor="trelloSecretCheckbox">Hide API Secret</label>
                     </div>
                 </div>
@@ -141,7 +121,7 @@ export default function Settings({currentPage, setCurrentPage}){
             <div className="item-container">
                 <h2>Appearance</h2>
                 <p>Toggle between light and dark mode.</p>
-                <select className="theme-select">
+                <select className="theme-select" defaultValue={theme} onChange={(e) => setTheme(e.target.value)}>
                     <option value="default">Default (Match System)</option>
                     <option value="light">Light Mode</option>
                     <option value="dark">Dark Mode</option>
@@ -149,10 +129,17 @@ export default function Settings({currentPage, setCurrentPage}){
             </div>
             <div className="item-container">
                 <h2>File Size</h2>
-                <p>Set the maximum allowed file size for uploads.</p>
-                <input id="max-file-size" className="max-file-size" type="number" placeholder="Enter max file size in bytes" defaultValue={preferences.maxFileSize} />
+                <p>Set the maximum allowed file size for uploads. Make sure that your token limits are sufficient to handle the file size you set.</p>
+                <input id="max-file-size" className="max-file-size" type="number" placeholder="Enter max file size in bytes" defaultValue={preferences.maxFileSize} onChange={(e) => setMaxFileSize(e.target.value)}/>
                 {/* TODO: Add a dropdown to select the units for the file size, and convert the input value to bytes based on the selected unit before saving it to the preferences. */}
                 <label htmlFor="max-file-size"> bytes</label>
+            </div>
+             <div className="item-container">
+                <h2>Max Tokens Used</h2>
+                <p>Sets the maximum number of tokens that can be used in a single request. Beware, setting this value too high may result in increased costs or slower response times. Additionally, setting it too low will produce incomplete task lists.</p>
+                <input id="max-tokens" className="max-tokens" type="number" placeholder="Enter max tokens" defaultValue={preferences.apis.claude_max_tokens} min="1024" max="65536" onBlur={(e) => setTokens(e)} />
+                {/* TODO: Add a dropdown to select the units for the file size, and convert the input value to bytes based on the selected unit before saving it to the preferences. */}
+                <label htmlFor="max-tokens"> tokens</label>
             </div>
             {/* future settings will go here with a new div and classname to create a seperate container */}
             <button className="button-accept" onSubmit={null}onClick={SaveSettings}>Save</button>

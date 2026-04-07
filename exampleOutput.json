@@ -1,0 +1,68 @@
+{
+    "project_summary": "OwlNet Technologies Q2 Sprint Tasks - Avian Cortex-to-Silicon Division",
+    "tasks": [{
+                "title": "Schedule OT-alpha ablation study working session",
+                "description": "Coordinate and schedule a 90-minute working session to determine whether OT-alpha structures should be modeled as separate attention heads in the transformer or integrated into existing spatial embedding layers",
+                "estimated_hours": 2,
+                "priority": "High",
+                "due_date": "April 17 2026",
+                "assigned_to": ["Marcus", "Dr. Adebayo"]
+            }, {
+                "title": "Investigate INT8 quantisation for edge inference",
+                "description": "Explore INT8 quantisation techniques to reduce inference latency below 20ms target for edge deployment branch of OwlNet v0.4",
+                "estimated_hours": 16,
+                "priority": "High",
+                "due_date": "April 24 2026",
+                "assigned_to": ["Tomás"]
+            }, {
+                "title": "Adjust Cohort C electrode schedule",
+                "description": "Modify electrode implant schedule to comply with reduced 60-day maximum duration per IACUC recommendation, affecting 3 subjects",
+                "estimated_hours": 4,
+                "priority": "Critical",
+                "due_date": "April 14 2026",
+                "assigned_to": ["Dr. Callahan"]
+            }, {
+                "title": "Prepare EU AI Act compliance memo",
+                "description": "Create compliance documentation for EU AI Act (Article 6, Annex III) applicability to OwlNet commercialisation for autonomous systems",
+                "estimated_hours": 12,
+                "priority": "Medium",
+                "due_date": "May 1 2026",
+                "assigned_to": ["Yuki"]
+            }, {
+                "title": "Follow up on edge hardware chip supply delay",
+                "description": "Contact chip suppliers to resolve supply chain issues blocking real-time inference on edge hardware",
+                "estimated_hours": 3,
+                "priority": "High",
+                "due_date": "April 10 2026",
+                "assigned_to": ["Marcus"]
+            }, {
+                "title": "Confirm Nature Machine Intelligence submission slot",
+                "description": "Secure publication slot for external peer review of OwlNet research in Nature Machine Intelligence journal",
+                "estimated_hours": 2,
+                "priority": "Medium",
+                "due_date": "April 20 2026",
+                "assigned_to": ["Dr. Venkatesan"]
+            }, {
+                "title": "Update investor deck with v0.4 benchmark results",
+                "description": "Incorporate latest OwlNet v0.4 training pipeline benchmarks into investor presentation materials for Series B funding",
+                "estimated_hours": 6,
+                "priority": "High",
+                "due_date": "April 12 2026",
+                "assigned_to": ["Lena"]
+            }, {
+                "title": "Complete Cohort B cortical mapping",
+                "description": "Finish mapping optic tectum and inferior colliculus connectivity in 12 barn owl subjects, including analysis of novel OT-alpha, OT-beta, and OT-gamma microcolumn structures",
+                "estimated_hours": 120,
+                "priority": "Critical",
+                "due_date": "May 30 2026",
+                "assigned_to": ["Dr. Callahan"]
+            }, {
+                "title": "Develop OwlNet v0.5 with OT-alpha attention heads",
+                "description": "Implement findings from cortical mapping into next version of OwlNet, incorporating OT-alpha structures as attention mechanisms",
+                "estimated_hours": 80,
+                "priority": "High",
+                "due_date": "June 20 2026",
+                "assigned_to": ["Tomás", "Marcus"]
+            }
+        ]
+    }

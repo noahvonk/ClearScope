@@ -3,9 +3,36 @@ import React, { useState, useEffect } from 'react';
 const deleteIconWhite = new URL('../../assets/images/trash-can-white.png', import.meta.url);
 const deleteIconBlack = new URL('../../assets/images/trash-can.png', import.meta.url);
 
-const preferences = require('../../preferences.json');
+let preferences;
 
-const maxSize = preferences.maxFileSize || 10 * 1024 * 1024; // max file size in MB, default to 10MB if not set in preferences
+let maxSize;
+
+const clearedTypes = [
+    'text/plain',           // sent as text
+    'application/pdf',      // sent natively
+    'image/jpeg',           // sent natively
+    'image/png',            // sent natively
+    'image/gif',            // sent natively
+    'image/webp'            // sent natively
+];
+
+const parsableTypes = [
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // docx
+    'application/msword',                                                        // doc
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',        // xlsx
+    'application/vnd.ms-excel',                                                  // xls
+    'text/csv'                                                                   // csv
+];
+
+function CheckCompatability(file){
+    if(clearedTypes.includes(file.type)){
+        return "cleared";
+    } else if(parsableTypes.includes(file.type)){
+        return "parsable";
+    } else {
+        return "incompatible";
+    }
+}
 
 /**
  * Default function for the FileItem component, which represents an individual file in the list of selected files for upload.
@@ -16,7 +43,12 @@ const maxSize = preferences.maxFileSize || 10 * 1024 * 1024; // max file size in
  */
 export default function FileItem({ index, file, selectedFiles, setSelectedFiles }) {
 
+    const [fileRequiresParsing, setFileRequiresParsing] = useState(false);
     const fileIndex = index;
+
+    preferences = JSON.parse(window.electronAPI.readFile(window.electronAPI.getAppPath()));
+
+    maxSize = preferences.maxFileSize || 10 * 1024 * 1024; // max file size in MB, default to 10MB if not set in preferences
 
     // set delete icon color based on theme
     let deleteIcon = deleteIconBlack;
@@ -31,6 +63,14 @@ export default function FileItem({ index, file, selectedFiles, setSelectedFiles 
     let classes = 'file-item-container';
     if(file.size > maxSize){
         classes += ' file-too-large';
+    }
+    
+    // check if the file is of an incompatible type, if so we will highlight it and mark it for exclusion. Currently we are only allowing text files and pdfs, but this can be adjusted in the future to allow for more file types.
+    const compatibility = CheckCompatability(file);
+    if(compatibility === "incompatible"){
+        classes += ' incompatible-file-type';
+    } else if(compatibility === "parsable"){
+        setFileRequiresParsing(true);
     }
 
     // Sets the labels for the file sizes to show the proper units, and formats the file size to be more readable.
