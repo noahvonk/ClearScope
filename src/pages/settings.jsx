@@ -66,7 +66,7 @@ export default function Settings({currentPage, setCurrentPage}){
                 claude_api_key: claudeApiKey,
                 trello_api_key: trelloApiKey,
                 trello_api_secret: trelloApiSecret,
-                claude_max_tokens: maxTokens
+                claude_max_tokens: parseInt(maxTokens)
             },
             maxFileSize: maxFileSize
         };

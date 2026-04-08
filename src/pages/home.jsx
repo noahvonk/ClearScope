@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import FileLoader from '../components/fileloader.jsx';
 import {RenderPage, RenderDefault} from '../App.jsx';
 import AgentResponseContainer from '../components/agentResponseContainer.jsx';
+import ModalError from '../components/modals/modalError.jsx';
 
 // load all of our required files as consts as we only will need to access their contents, not replace them.
 const gearIconWhite = new URL('../../assets/images/gear-white.png', import.meta.url);
@@ -30,10 +31,9 @@ export default function Home({currentPage, setCurrentPage}){
     return (
         <div className="home-container">
             <div className="header-container-image">
-            <div width="32" height="32"></div>
-            <h1>ClearScope</h1>
-            <img className="image-button" src={gearIcon} width="32" height="32" alt="Gear Icon" onClick={() => setCurrentPage(routes.SETTINGS)} />
-
+                <div width="32" height="32"></div>
+                <h1>ClearScope</h1>
+                <img className="image-button" src={gearIcon} width="32" height="32" alt="Gear Icon" onClick={() => setCurrentPage(routes.SETTINGS)} />
             </div>
         {!filesUploading ? <FileLoader setFilesUploading={setFilesUploading} setFiles={setFiles}/> : <AgentResponseContainer files={files} />}
         </div>

@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
+export function getTaskData(){
+    // create a new json object with the data we parsed and allowed the user to edit.
+    const taskData = {
+        title: document.querySelector('.task-title').value,
+        description: document.querySelector('.task-description').value,
+        estimated_hours: document.querySelector('.task-estimated-hours').value,
+        priority: document.querySelector('.task-priority').value,
+        due_date: document.querySelector('.due-date').value,
+        assigned_to: document.querySelector('.assigned-to').value.split(",").map(name => name.trim())
+    }
+    return taskData;
+}
+
 export default function TaskItem({ index, task }) {
 
     function getAssinedTo(assigned_to){
@@ -38,6 +51,7 @@ export default function TaskItem({ index, task }) {
                     <option value="Critical">Critical</option>
                 </select>
             </div>
+
             <div className='task-details-subcontainer'>
                 <label htmlFor="due-date">Due Date:</label>
                 {console.log(task.due_date)}
@@ -46,8 +60,6 @@ export default function TaskItem({ index, task }) {
         </div>
 
         <div className='task-details-container'>
-
-
             <div className='task-details-subcontainer'>
                 <label htmlFor="assigned-to">Assigned To:</label>
                 <input type="text" className='assigned-to' defaultValue={getAssinedTo(task.assigned_to)} />

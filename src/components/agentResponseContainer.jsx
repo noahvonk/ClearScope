@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Spinner from '../../assets/svgs/spinner.svg';
 import TaskItem from './taskItem.jsx';
+import { getTaskData } from './taskItem.jsx';
+import { exportToJson } from '../exports/exportTasks.js';
+import ModalError from './modals/modalError.jsx';
 
 function fileToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -26,6 +29,7 @@ export default function AgentResponseContainer({ files }) {
     const [responseSummary, setResponseSummary] = useState("");
     const [loadingText, setLoadingText] = useState("Getting things started");
     const [responseReady, setResponseReady] = useState(false);
+    const [taskList, setTaskList] = useState([]);
     const responseReadyRef = useRef(responseReady);
 
     const preferences = JSON.parse(window.electronAPI.readFile(window.electronAPI.getAppPath()));
@@ -60,7 +64,6 @@ export default function AgentResponseContainer({ files }) {
                 const jsonResponse = response.replace(/^[^{]*|[^}]*$/g, ''); // strip out any text that is not contained in json format
                 const parsedResponse = JSON.parse(jsonResponse);
 
-
                 setDisplayResponse(parsedResponse.tasks);
                 setResponseSummary(parsedResponse.project_summary);
             } catch (err) {
@@ -77,16 +80,6 @@ export default function AgentResponseContainer({ files }) {
         }
     }, [files]);
 
-    if (error) {
-        return (
-            <div className='response-container'>
-                <div className='error-container'>
-                    <p>Error: {error}</p>
-                </div>
-            </div>
-        );
-    }
-
     useEffect(() => {
         if(loading){
             setTimeout(() => {
@@ -94,6 +87,25 @@ export default function AgentResponseContainer({ files }) {
             }, 3000);
         }
     }, [loading]);
+
+    useEffect(() => {
+        if(!displayResponse || !Array.isArray(displayResponse)){
+            return;
+        }
+        setTaskList(displayResponse.map((task, index) => (
+            <TaskItem key={index} task={task} />
+        )));
+    }, [displayResponse]);
+
+    // if (error) {
+    //     return (
+    //         <div className='response-container'>
+    //             <ModalError errorMessage={error} setErrorMessage={setError} />
+    //         </div>
+    //     );
+    // }
+
+
 
     function FadeOutText(){
         document.querySelector('#loading-text').classList.toggle('fade-hide');
@@ -118,6 +130,18 @@ export default function AgentResponseContainer({ files }) {
         }, 1000);
 
     }
+
+    function handleExport(){
+        // we need to grab each of the task components and call the getTaskData function to get the updated data from the user input, then we can create a new json object with that data and export it as a file.
+        // now that taskList stores all of the task objects, we can just loop through that and call the getTaskData function on each of them to get the updated data from the user input, then we can create a new json object with that data and export it as a file.
+        const updatedTasks = taskList.map(taskComponent => {
+            return getTaskData();
+        });
+
+        exportToJson(updatedTasks);
+
+    }
+
 
     function setLoadingPhrase(){
         const loadingTexts = [
@@ -151,9 +175,10 @@ export default function AgentResponseContainer({ files }) {
 
     function parseResponse(response) {
         try {
-            return response.map((task, index) => (
-               <TaskItem key={index} task={task} />
-            ));
+            setTaskList(response.map((task, index) => (
+                <TaskItem key={index} task={task} />
+            )));
+            return taskList;
         } catch (err) {
             console.error('Error parsing response:', err);
             return <p>Error parsing response: {err.message}</p>;
@@ -172,23 +197,24 @@ export default function AgentResponseContainer({ files }) {
             <hr></hr>
             <p className="response-summary">{responseSummary}</p>
             <div className="tasks-container">
-                {parseResponse(displayResponse)}
+                {taskList}
             </div>
             <div className='export-stack'>
-                <button className="button-accept" onClick={() => alert("Export functionality not implemented yet")}>Export</button>
+                <button className="button-accept" onClick={() => handleExport()}>Export</button>
                 <select className="export-format-dropdown" defaultValue="">
-                    <option value="" disabled>Choose export format (No exports implemented)</option>
+                    <option value="" disabled>Choose export format</option>
                     <option value="json">JSON</option>
-                    <option value="csv">CSV</option>
-                    <option value="google-calendar">Google Calendar</option>
-                    <option value="outlook-calendar">Outlook Calendar</option>
-                    <option value="microsoft-planner">Microsoft Planner</option>
-                    <option value="xlsx">Excel</option>
-                    <option value="trello">Trello</option>
-                    <option value="asana">Asana</option>
+                    <option value="csv" disabled >CSV</option>
+                    <option value="google-calendar" disabled>Google Calendar</option>
+                    <option value="outlook-calendar" disabled>Outlook Calendar</option>
+                    <option value="microsoft-planner" disabled>Microsoft Planner</option>
+                    <option value="xlsx" disabled>Excel</option>
+                    <option value="trello" disabled>Trello</option>
+                    <option value="asana" disabled>Asana</option>
                 </select>
             </div>
         </div>}
+        {error && <ModalError errorMessage={error.message} setErrorMessage={setError} />}
         </div>
 
     )
