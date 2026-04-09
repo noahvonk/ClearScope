@@ -22,10 +22,11 @@ jobs:
 
       - name: Build and publish Windows
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run publish-win
 
   build-mac:
+    needs: build-windows
     runs-on: macos-latest
     if: github.actor == 'noahvonk'
     steps:
@@ -41,5 +42,5 @@ jobs:
 
       - name: Build and publish Mac
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run publish-mac

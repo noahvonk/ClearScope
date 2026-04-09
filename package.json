@@ -1,7 +1,7 @@
 {
   "name": "ClearScope",
   "productName": "ClearScope",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Turn Messy Data into Clear Insights with ClearScope: Your Ultimate Data Analysis Companion",
   "main": ".webpack/main",
   "private": true,

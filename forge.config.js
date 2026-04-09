@@ -42,7 +42,6 @@ module.exports = {
           owner: 'noahvonk',
           name: 'ClearScope',
         },
-        prerelease: false,
         draft: true,  // creates a draft release so you can review before publishing
       },
     },
