@@ -10,7 +10,9 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "publish-win": "electron-forge publish --platform win32",
+    "publish-mac": "electron-forge publish --platform darwin"
   },
   "keywords": [],
   "author": {
@@ -29,6 +31,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.11.1",
     "@electron-forge/plugin-fuses": "^7.11.1",
     "@electron-forge/plugin-webpack": "^7.11.1",
+    "@electron-forge/publisher-github": "^7.11.1",
     "@electron/fuses": "^1.8.0",
     "@svgr/webpack": "^8.1.0",
     "@types/node": "^25.5.0",
@@ -36,12 +39,12 @@
     "babel-loader": "^10.1.1",
     "css-loader": "^6.11.0",
     "electron": "41.1.0",
+    "electron-builder": "^26.8.1",
     "node-loader": "^2.1.0",
     "style-loader": "^3.3.4"
   },
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "^0.2.92",
-    "electron-builder": "^26.8.1",
     "electron-squirrel-startup": "^1.0.1",
     "file-saver": "^2.0.5",
     "mammoth": "^1.12.0",

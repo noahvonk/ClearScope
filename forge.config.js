@@ -24,6 +24,19 @@ module.exports = {
       config: {},
     },
   ],
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'noahvonk',
+          name: 'ClearScope',
+        },
+        prerelease: false,
+        draft: true,  // creates a draft release so you can review before publishing
+      },
+    },
+  ],
   plugins: [
     {
       name: '@electron-forge/plugin-auto-unpack-natives',
