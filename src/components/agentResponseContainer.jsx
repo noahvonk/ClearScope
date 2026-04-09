@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Spinner from '../../assets/svgs/spinner.svg';
 import TaskItem from './taskItem.jsx';
-import { getTaskData } from './taskItem.jsx';
 import { exportToJson } from '../exports/exportTasks.js';
 import ModalError from './modals/modalError.jsx';
 
@@ -20,17 +19,17 @@ function fileToBase64(file) {
 
 
 
-export default function AgentResponseContainer({ files }) {
+export default function AgentResponseContainer({ files, setError, filesUploading, setFilesUploading }) {
 
     const [displayResponse, setDisplayResponse] = useState("");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const [tasks, setTasks] = useState([]);
     const [responseSummary, setResponseSummary] = useState("");
     const [loadingText, setLoadingText] = useState("Getting things started");
     const [responseReady, setResponseReady] = useState(false);
     const [taskList, setTaskList] = useState([]);
     const responseReadyRef = useRef(responseReady);
+    const taskListRef = useRef(taskList);
 
     const preferences = JSON.parse(window.electronAPI.readFile(window.electronAPI.getAppPath()));
 
@@ -53,7 +52,7 @@ export default function AgentResponseContainer({ files }) {
             try {
                 setLoading(true);
                 setError(null);
-
+                setFilesUploading(true);
                 const encodedFiles = await Promise.all(files.map(fileToBase64));
 
                 // this file is going to most likely come back with a json parse error because claude is going to include text along with the json, so we need to strip out the text and only return the json. This is done by asking claude to only return the json, and to strip out any text that is not contained in json format. This is done in the prompt, but we also need to do it here to ensure that we can parse the response correctly.
@@ -68,9 +67,26 @@ export default function AgentResponseContainer({ files }) {
                 setResponseSummary(parsedResponse.project_summary);
             } catch (err) {
                 console.error('Error fetching response:', err);
-                setError(err.message);
+                if(err != null && err.statusCode){
+                    setError(await window.electronAPI.getErrorCodeMessage(err.statusCode));
+                }
+                else{
+                    // this is a bit of a hacky solution, but the claude api returns a very generic error message when the api key is not set, so we can check for that specific error message and display a more user-friendly message instead.
+                    // CLAUDE YOU SHOULD INCLUDE ERROR CODES INSTEAD OF THIS NONSENSE!!!!
+                    switch(err.message){
+                        case "Error invoking remote method 'claude-query': Error: Could not resolve authentication method. Expected either apiKey or authToken to be set. Or for one of the \"X-Api-Key\" or \"Authorization\" headers to be explicitly omitted":
+                        setError("Claude API key is not set.\nPlease enter your Claude API key in the settings page and try again.");
+                        return;
+                    default:
+                        setError(err.message);
+                    }
+                }
+                setFilesUploading(false);
+                setLoading(false);
+                return;
             } finally {
                 setResponseReady(true);
+                //setLoading(false);
                 responseReadyRef.current = true;
             }
         };
@@ -92,8 +108,9 @@ export default function AgentResponseContainer({ files }) {
         if(!displayResponse || !Array.isArray(displayResponse)){
             return;
         }
+        taskListRef.current = displayResponse.map(() => React.createRef());
         setTaskList(displayResponse.map((task, index) => (
-            <TaskItem key={index} task={task} />
+            <TaskItem key={index} index={index} task={task} ref={taskListRef.current[index]} />
         )));
     }, [displayResponse]);
 
@@ -108,6 +125,9 @@ export default function AgentResponseContainer({ files }) {
 
 
     function FadeOutText(){
+        if(document.querySelector('#loading-text') == null){
+            return;
+        }
         document.querySelector('#loading-text').classList.toggle('fade-hide');
         setTimeout(() => {
             setLoadingPhrase();
@@ -134,10 +154,8 @@ export default function AgentResponseContainer({ files }) {
     function handleExport(){
         // we need to grab each of the task components and call the getTaskData function to get the updated data from the user input, then we can create a new json object with that data and export it as a file.
         // now that taskList stores all of the task objects, we can just loop through that and call the getTaskData function on each of them to get the updated data from the user input, then we can create a new json object with that data and export it as a file.
-        const updatedTasks = taskList.map(taskComponent => {
-            return getTaskData();
-        });
-
+        
+        const updatedTasks = taskListRef.current.map(ref => ref.current.getTaskData());
         exportToJson(updatedTasks);
 
     }
@@ -158,7 +176,11 @@ export default function AgentResponseContainer({ files }) {
             setLoadingText("Finalizing response");
             return;
         }
-        setLoadingText(loadingTexts[Math.floor(Math.random() * loadingTexts.length)]);
+        let loadText = loadingTexts[Math.floor(Math.random() * loadingTexts.length)];
+        if(loadingText === loadText){
+            return setLoadingPhrase();
+        }
+        setLoadingText(loadText);
     }
 
     useEffect(() => {
@@ -214,7 +236,6 @@ export default function AgentResponseContainer({ files }) {
                 </select>
             </div>
         </div>}
-        {error && <ModalError errorMessage={error.message} setErrorMessage={setError} />}
         </div>
 
     )

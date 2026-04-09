@@ -11,6 +11,7 @@ export default function Credits(){
             <a href="https://www.flaticon.com/free-icons/back-arrow" title="back arrow icons">Back arrow icons created by Ilham Fitrotul Hayat - Flaticon</a>
             <a href="https://www.flaticon.com/free-icons/file-upload" title="file upload icons">File upload icons created by Fathema Khanom - Flaticon</a>
             <a href="https://www.flaticon.com/free-icons/trash-can" title="trash can icons">Trash can icons created by Freepik - Flaticon</a>
+            <a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Freepik - Flaticon</a>
         </div>
     )
 }

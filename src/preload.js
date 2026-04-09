@@ -12,5 +12,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   fileExists: (filePath) => fs.existsSync(filePath),
   getAppPath: () => path.join(ipcRenderer.sendSync('get-user-data-path'), 'preferences.json'),
   claudeQuery: (prompt, files) => ipcRenderer.invoke('claude-query', prompt, files),
+  getErrorCodeMessage: (statusCode) => ipcRenderer.invoke('get-error-code-message', statusCode)
   // add whatever fs operations you need
 });

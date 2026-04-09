@@ -76423,6 +76423,10 @@ const version = XLSX.version;
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/compat */
+/******/ 	
+/******/ 	if (typeof __webpack_require__ !== 'undefined') __webpack_require__.ab = __dirname + "/native_modules/";
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
@@ -76551,6 +76555,35 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+ipcMain.handle('get-error-code-message', (event, errorCode) => {
+  let errorMessage = "";
+  switch (errorCode) {
+    case 400:
+      errorMessage = "Bad request. Please check the format of your files and try again.";
+      break;
+    case 401:
+      errorMessage = "Unauthorized. Please check your API key and try again.";
+      break;
+    case 403:
+      errorMessage = "Forbidden. You do not have permission to access this resource.";
+      break;
+    case 404:
+      errorMessage = "Not found. The requested resource could not be found.";
+      break;
+    case 429:
+      errorMessage = "Too many requests. You have exceeded your API rate limit. Please wait and try again.";
+      break;
+    case 500:
+      errorMessage = "Internal server error. Please try again later.";
+      break;
+    case 529:
+      errorMessage = "Claude servers are currently overloaded. Please wait and try again.";
+      break;
+    default:
+      errorMessage = "An error occurred while fetching the response. Please try again.";
+  }
+  return errorMessage;
 });
 ipcMain.on('get-user-data-path', event => {
   console.log('Received request for user data path');
