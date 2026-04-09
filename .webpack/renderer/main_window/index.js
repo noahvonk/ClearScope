@@ -839,7 +839,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"HOME":"Home","SETTINGS":"Settings"}'
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("8056d7e8e99cebd3d1ad")
+/******/ 		__webpack_require__.h = () => ("ecf8c81031e1939b0e8f")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -1332,6 +1332,10 @@ module.exports = /*#__PURE__*/JSON.parse('{"HOME":"Home","SETTINGS":"Settings"}'
 /******/ 	(() => {
 /******/ 		__webpack_require__.p = "/";
 /******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat */
+/******/ 	
+/******/ 	if (typeof __webpack_require__ !== 'undefined') __webpack_require__.ab = "G:\\Projects\\ClearScope\\.webpack\\renderer" + "/native_modules/";
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
